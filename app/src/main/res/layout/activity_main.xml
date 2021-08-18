@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/btnPourOverCoffee"
+        android:layout_width="229dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="52dp"
+        android:text="@string/pour_over_coffee"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.549"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnColdBrewCoffee"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/cold_brew_coffee"
+        app:layout_constraintEnd_toEndOf="@id/btnPourOverCoffee"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/btnPourOverCoffee"
+        app:layout_constraintTop_toBottomOf="@+id/btnPourOverCoffee" />
+
+    <LinearLayout
+        android:id="@+id/BaseValuesLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnColdBrewCoffee">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/lblBaseCoffee"
+                android:layout_width="89dp"
+                android:layout_height="23dp"
+                android:text="@string/base_coffee_label"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/txtBaseCoffeeAmount"
+                android:layout_width="89dp"
+                android:layout_height="23dp"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/lblBaseWater"
+                android:layout_width="89dp"
+                android:layout_height="23dp"
+                android:text="@string/base_water_label"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/txtBaseWaterAmount"
+                android:layout_width="89dp"
+                android:layout_height="23dp"
+                android:visibility="visible" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/CalculateLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/BaseValuesLayout">
+
+        <Button
+            android:id="@+id/btnCalculate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/calculate"
+            android:visibility="invisible"
+            app:layout_constraintStart_toEndOf="@id/txtEnterCalcAmount"
+            app:layout_constraintTop_toBottomOf="@id/radioGroup" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/txtEnterCalcAmount"
+            android:layout_width="200dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:background="#00FFFFFF"
+            android:hint="@string/enter_calc_amount"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColorHint="#009688"
+            android:textSize="14sp"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/radioGroup" />
+
+        <TextView
+            android:id="@+id/lblSelectCalculation"
+            android:layout_width="wrap_content"
+            android:layout_height="18dp"
+            android:text="@string/select_calc"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lblSelectCalculation">
+
+            <RadioButton
+                android:id="@+id/rdioCoffee"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:paddingStart="0dp"
+                android:paddingEnd="15dp"
+                android:text="@string/coffee" />
+
+            <RadioButton
+                android:id="@+id/rdioWater"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:paddingStart="0dp"
+                android:paddingEnd="15dp"
+                android:text="@string/water" />
+
+        </RadioGroup>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ResultsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="48dp"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@id/CalculateLayout">
+
+        <TextView
+            android:id="@+id/lblCurrentCoffee"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:paddingStart="3dp"
+            android:paddingEnd="3dp"
+            android:text="@string/coffee"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtCoffeeResult"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="3dp"
+            android:paddingEnd="3dp"
+            app:layout_constraintStart_toEndOf="@id/lblCurrentCoffee"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/lblCurrentWater"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:paddingStart="3dp"
+            android:paddingEnd="3dp"
+            android:text="@string/water"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lblCurrentCoffee" />
+
+        <TextView
+            android:id="@+id/txtWaterResult"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="3dp"
+            android:paddingEnd="3dp"
+            app:layout_constraintStart_toEndOf="@id/lblCurrentWater"
+            app:layout_constraintTop_toBottomOf="@id/txtCoffeeResult" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
