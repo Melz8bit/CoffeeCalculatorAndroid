@@ -11,4 +11,5 @@
     <string name="water">Water</string>
     <string name="enter_calc_amount">Enter amount of </string>
     <string name="calculate">Calculate</string>
+    <string name="settings">Settings</string>
 </resources>

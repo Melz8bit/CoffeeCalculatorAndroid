@@ -1,11 +1,18 @@
 package com.example.coffeecalculator;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -13,6 +20,8 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import org.w3c.dom.Text;
 
@@ -35,11 +44,14 @@ public class MainActivity extends AppCompatActivity {
     TextView baseCoffeeAmount;
     TextView baseWaterAmount;
     TextView inputValueAmount;
+    TextView lblEnterAmount;
     TextView coffeeResult;
     TextView waterResult;
     RadioGroup radioGroup;
     RadioButton selectedCoffeeOrWater;
     InputMethodManager keyboardManager;
+    View divider;
+    View parentView;
     String brewMethod = "";
     String whatToCalculate = "";
 
@@ -52,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         baseWaterAmount = (TextView) findViewById(R.id.txtBaseWaterAmount);
 
         baseValuesLayout = (ViewGroup) findViewById(R.id.BaseValuesLayout);
+        divider = (View) findViewById(R.id.divider);
         calculateLayout = (ViewGroup) findViewById(R.id.CalculateLayout);
         resultsLayout = (ViewGroup) findViewById(R.id.ResultsLayout);
 
@@ -61,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
         radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
 
+        lblEnterAmount = (TextView) findViewById(R.id.lblEnterAmount);
         inputValueAmount = (TextView) findViewById(R.id.txtEnterCalcAmount);
 
         coffeeResult = (TextView) findViewById(R.id.txtCoffeeResult);
@@ -81,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @SuppressLint("NonConstantResourceId")
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 String inputBoxHint = "";
@@ -97,9 +112,11 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
 
-                inputValueAmount.setHint(inputBoxHint);
+                lblEnterAmount.setText(inputBoxHint);
+                lblEnterAmount.setVisibility(View.VISIBLE);
                 inputValueAmount.setVisibility(View.VISIBLE);
-                btnCalculate.setVisibility((View.VISIBLE));
+                inputValueAmount.requestFocus();
+                btnCalculate.setVisibility(View.VISIBLE);
             }
         });
 
@@ -114,18 +131,24 @@ public class MainActivity extends AppCompatActivity {
                 keyboardManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
                 // User doesn't input an amount
-                // TODO: catch exception
-                if (inputValueAmount.getText() == null)
-                    userAmount = 0.0;
-                else
+                try {
                     userAmount = Double.parseDouble(inputValueAmount.getText().toString());
+                }
+                catch (NumberFormatException e) {
+                    String message = "Amount of coffee/water cannot be blank";
+
+                    parentView = findViewById(R.id.parentLayout);
+                    Snackbar.make(parentView, message, Snackbar.LENGTH_SHORT)
+                            .setBackgroundTint(getResources().getColor(R.color.gray))
+                            .setTextColor(getResources().getColor(R.color.white))
+                            .show();
+                }
 
                 if (whatToCalculate.equals("Coffee")) {
                     coffeeResult.setText(decimalFormat.format(calculateCoffee(userAmount, brewMethod)) + " grams");
                     waterResult.setText(userAmount + " milliliters");
-                }
-                else if (whatToCalculate.equals("Water")) {
-                    waterResult.setText(decimalFormat.format(calculateWater(userAmount, brewMethod)) +  " milliliters");
+                } else if (whatToCalculate.equals("Water")) {
+                    waterResult.setText(decimalFormat.format(calculateWater(userAmount, brewMethod)) + " milliliters");
                     coffeeResult.setText(userAmount + " grams");
                 }
 
@@ -134,18 +157,36 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.my_options_menu, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.settings:
+                //startActivity(new Intent(this, Settings.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     public void displayBaseAmounts(String brewMethod) {
         if (brewMethod.equals("pour_over")) {
-            baseCoffeeAmount.setText(Integer.toString(BASE_POUR_OVER_COFFEE_AMOUNT) + " grams");
-            baseWaterAmount.setText(Integer.toString(BASE_POUR_OVER_WATER_AMOUNT) + " milliliters");
+            baseCoffeeAmount.setText(Integer.toString(BASE_POUR_OVER_COFFEE_AMOUNT) + " g");
+            baseWaterAmount.setText(Integer.toString(BASE_POUR_OVER_WATER_AMOUNT) + " ml");
         }
         else if (brewMethod.equals("cold_brew")) {
-            baseCoffeeAmount.setText(Integer.toString(BASE_COLD_BREW_COFFEE_AMOUNT) + " grams");
-            baseWaterAmount.setText(Integer.toString(BASE_COLD_BREW_WATER_AMOUNT) + " milliliters");
+            baseCoffeeAmount.setText(Integer.toString(BASE_COLD_BREW_COFFEE_AMOUNT) + " g");
+            baseWaterAmount.setText(Integer.toString(BASE_COLD_BREW_WATER_AMOUNT) + " ml");
         }
 
-        baseValuesLayout.setVisibility((View.VISIBLE));
-        calculateLayout.setVisibility((View.VISIBLE));
+        baseValuesLayout.setVisibility(View.VISIBLE);
+        calculateLayout.setVisibility(View.VISIBLE);
+        divider.setVisibility(View.VISIBLE);
+
     }
 
     public double calculateCoffee(double waterAmount, String brewMethod) {

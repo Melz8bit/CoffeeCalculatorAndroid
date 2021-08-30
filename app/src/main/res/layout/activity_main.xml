@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parentLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:showAsAction="ifRoom"
     tools:context=".MainActivity">
 
     <Button
         android:id="@+id/btnPourOverCoffee"
         android:layout_width="229dp"
         android:layout_height="48dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="32dp"
         android:text="@string/pour_over_coffee"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.549"
@@ -28,92 +31,83 @@
         app:layout_constraintStart_toStartOf="@id/btnPourOverCoffee"
         app:layout_constraintTop_toBottomOf="@+id/btnPourOverCoffee" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/BaseValuesLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="330dp"
+        android:layout_height="35dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:orientation="vertical"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnColdBrewCoffee">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        <TextView
+            android:id="@+id/lblBaseCoffee"
+            android:layout_width="89dp"
+            android:layout_height="23dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="6dp"
+            android:text="@string/base_coffee_label"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-            <TextView
-                android:id="@+id/lblBaseCoffee"
-                android:layout_width="89dp"
-                android:layout_height="23dp"
-                android:text="@string/base_coffee_label"
-                android:visibility="visible" />
+        <TextView
+            android:id="@+id/txtBaseCoffeeAmount"
+            android:layout_width="55dp"
+            android:layout_height="23dp"
+            android:visibility="visible"
+            app:layout_constraintLeft_toRightOf="@id/lblBaseCoffee"
+            app:layout_constraintTop_toTopOf="@+id/lblBaseCoffee" />
 
-            <TextView
-                android:id="@+id/txtBaseCoffeeAmount"
-                android:layout_width="89dp"
-                android:layout_height="23dp"
-                android:visibility="visible" />
+        <TextView
+            android:id="@+id/txtBaseWaterAmount"
+            android:layout_width="55dp"
+            android:layout_height="23dp"
+            android:layout_marginEnd="8dp"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/lblBaseWater"
+            app:layout_constraintTop_toTopOf="@+id/lblBaseWater" />
 
-        </LinearLayout>
+        <TextView
+            android:id="@+id/lblBaseWater"
+            android:layout_width="89dp"
+            android:layout_height="23dp"
+            android:layout_marginStart="24dp"
+            android:text="@string/base_water_label"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/txtBaseCoffeeAmount"
+            app:layout_constraintTop_toTopOf="@+id/lblBaseCoffee"
+            app:layout_constraintVertical_bias="0.0" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/lblBaseWater"
-                android:layout_width="89dp"
-                android:layout_height="23dp"
-                android:text="@string/base_water_label"
-                android:visibility="visible" />
-
-            <TextView
-                android:id="@+id/txtBaseWaterAmount"
-                android:layout_width="89dp"
-                android:layout_height="23dp"
-                android:visibility="visible" />
-        </LinearLayout>
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/CalculateLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="332dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="64dp"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/BaseValuesLayout">
 
-        <Button
-            android:id="@+id/btnCalculate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/calculate"
-            android:visibility="invisible"
-            app:layout_constraintStart_toEndOf="@id/txtEnterCalcAmount"
-            app:layout_constraintTop_toBottomOf="@id/radioGroup" />
-
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtEnterCalcAmount"
-            android:layout_width="200dp"
+            android:layout_width="75dp"
             android:layout_height="48dp"
-            android:layout_marginTop="8dp"
             android:background="#00FFFFFF"
-            android:hint="@string/enter_calc_amount"
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textColorHint="#009688"
             android:textSize="14sp"
             android:visibility="invisible"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/radioGroup" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/lblEnterAmount"
+            app:layout_constraintTop_toTopOf="@+id/lblEnterAmount" />
 
         <TextView
             android:id="@+id/lblSelectCalculation"
@@ -148,15 +142,38 @@
                 android:text="@string/water" />
 
         </RadioGroup>
+
+        <TextView
+            android:id="@+id/lblEnterAmount"
+            android:layout_width="255dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical"
+            android:text="@string/enter_calc_amount"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
+
+        <Button
+            android:id="@+id/btnCalculate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/calculate"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lblEnterAmount" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ResultsLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="44dp"
         android:visibility="invisible"
-        app:layout_constraintTop_toBottomOf="@id/CalculateLayout">
+        app:layout_constraintTop_toBottomOf="@id/CalculateLayout"
+        tools:layout_editor_absoluteX="1dp">
 
         <TextView
             android:id="@+id/lblCurrentCoffee"
@@ -199,5 +216,18 @@
             app:layout_constraintTop_toBottomOf="@id/txtCoffeeResult" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="391dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
+        android:background="?android:attr/listDivider"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/CalculateLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BaseValuesLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
